@@ -1,0 +1,39 @@
+### Order6000根据ID查询
+GET http://localhost:6000/consumer/pay/get/1
+
+<> 2024-07-11T120634.200.json
+<> 2024-07-11T120255.200.json
+
+### Order6000创建支付流水
+POST http://localhost:6000/consumer/pay/add
+Content-Type: application/json
+
+{
+  "payNo": "payrest001",
+  "orderNo": "orderrest001",
+  "userId": "2",
+  "amount": "111"
+}
+
+<> 2024-07-11T120613.200.json
+
+### Order6000更新支付流水
+PUT http://localhost:6000/consumer/pay/update
+Content-Type: application/json
+
+{
+  "id": "4",
+  "payNo": "order600exchangepay",
+  "orderNo": "order6000exchangeorder",
+  "userId": "2222",
+  "amount": "2333"
+}
+
+### Order6000删除支付流水
+DELETE http://localhost:6000/consumer/pay/delete/4
+
+### Order6000测试负载均衡
+GET http://localhost:6000/consumer/pay/get/info
+
+### Order6000测试获取discovery信息
+GET http://localhost:6000/consumer/discovery

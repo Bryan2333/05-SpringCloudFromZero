@@ -1,0 +1,158 @@
+server:
+  port: 8443
+#  port: 6000
+
+spring:
+  application:
+    name: cloud-consumer-openfeign-order
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+        heartbeat:
+          enabled: true
+    openfeign:
+      # 开启httpclient 5 优化连接性能
+      httpclient:
+        hc5:
+          enabled: true
+      # 开发请求/响应压缩
+      compression:
+        request:
+          enabled: true
+          min-request-size: 2048
+          mime-types: application/json,application/xml # 对哪些数据类型进行压缩
+        response:
+          enabled: true
+      client:
+        config:
+          # default是全局配置
+#          default:
+#            connect-timeout: 3000 # 连接超时时间
+#            read-timeout: 3000 # 读取超市时间
+          # 单独为cloud-payment-service这个服务配置
+          cloud-payment-service:
+            connect-timeout: 60000
+            read-timeout: 60000
+      # 开启circuitbreaker和分组
+      circuitbreaker:
+        enabled: false
+#        group:
+#          enabled: false
+
+# feign以接口为单位配置日志级别
+logging:
+  level:
+    com:
+      bryan:
+        cloud:
+          apis:
+            PayFeignApi: debug # 只有debug等级才会输出日志
+
+
+######################## zipkin配置 ##################################
+#management:
+#  zipkin:
+#    tracing:
+#      endpoint: http://127.0.0.1:9411/api/v2/spans
+#  tracing:
+#    sampling:
+#      probability: 1.0
+
+######################## Resilience4J 限流器 #############################
+#resilience4j:
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 20s
+#  ratelimiter:
+#    configs:
+#      default:
+#        limit-for-period: 2             # 一次刷新周期内，允许执行的最大请求数
+#        limit-refresh-period: 1s        # 限流器的刷新频率
+#        timeout-duration: 1
+#    instances:
+#      cloud-payment-serivce:
+#        base-config: default
+
+
+####################### resilience4j COUNT_BASED 断路器 ##########################
+#resilience4j:
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 20s
+#    circuitbreaker:
+#      configs:
+#        default:
+#          failure-rate-threshold: 50                                # 设置50%的调用失败时开启断路器
+#          sliding-window-type: COUNT_BASED                          # 滑动窗口的类型
+#          sliding-window-size: 6                                    # 滑动窗口的大小
+#          minimum-number-of-calls: 6                                # 断路器计算失败率/慢调用的最小样本
+#          automatic-transition-from-open-to-half-open-enabled: true # 是否允许自动从开启状态转换到半开启状态
+#          wait-duration-in-open-state: 5s                           # 从OPEN到HALF_OPEN的等待时间
+#          permitted-number-of-calls-in-half-open-state: 2           # HALF_OPEN状态下允许通过的请求数量
+#          record-exceptions:
+#            - java.lang.Exception
+#      instances:
+#        cloud-payment-service:
+#          base-config: default
+
+
+############################## resilience4j TIME_BASED 断路器######################
+#resilience4j:
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 10s
+#  circuitbreaker:
+#    configs:
+#      default:
+#        failure-rate-threshold: 50
+#        slow-call-duration-threshold: 2s                    # 慢调用时间阈值，高于这个值就会被视为慢调用
+#        slow-call-rate-threshold: 30                        # 慢调用峰值比例
+#        sliding-window-type: TIME_BASED
+#        sliding-window-size: 2
+#        permitted-number-of-calls-in-half-open-state: 2
+#        wait-duration-in-open-state: 5s
+#        record-exceptions:
+#          - java.lang.Exception
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+
+
+################################ Resilience4J 信号量舱壁 ##############################
+#resilience4j:
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 20s
+#  bulkhead:
+#    configs:
+#      default:
+#        max-concurrent-calls: 2
+#        max-wait-duration: 1s
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+
+
+################################# Resilience4J 线程池舱壁 #############################
+#resilience4j:
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 20s
+#  thread-pool-bulkhead:
+#    configs:
+#      default:
+#        core-thread-pool-size: 1
+#        max-thread-pool-size: 1
+#        queue-capacity: 1
+#    instances:
+#      cloud-payment-service:
+#        base-config: default

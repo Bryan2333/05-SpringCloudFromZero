@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: nacos-config-client
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml        # 指定配置文件的格式
+        group: PROD_GROUP           # 指定配置分组
+        namespace: prod_namespace   # 指定命名空间
+
+# Nacos配置文件名:
+# ${spring.application.name}-${spring-profiles-active}.${spring.cloud.nacos.config.file-extensions}

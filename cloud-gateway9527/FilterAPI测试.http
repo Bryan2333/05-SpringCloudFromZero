@@ -1,0 +1,18 @@
+### gate9527测试AddRequestHeader
+GET http://localhost:9527/pay/gateway/filter
+
+### gateway9527测试RemoveRequestHeader
+GET http://localhost:9527/pay/gateway/filter
+
+### gateway9527测试SetRequestHeader
+GET http://localhost:9527/pay/gateway/filter
+Bryan-Custom-Header: bryan1Value
+
+### gateway9527测试AddRequestParameter
+GET http://localhost:9527/pay/gateway/filter?customerId=114514&customerName=张三
+
+### gateway9527测试SetPath
+GET http://localhost:9527/XYZ/abc/filter
+
+### gateway9527测试自定义Filter
+GET http://localhost:9527/pay/gateway/filter?bryan=ok

@@ -1,0 +1,41 @@
+### pay8001按主键查询支付流水
+GET http://localhost:8001/pay/get/1
+
+<> 2024-07-10T155743.200.json
+
+### pay8001创建支付流水
+POST http://localhost:8001/pay/add
+Content-Type: application/json
+
+{
+  "payNo": "paystring",
+  "orderNo": "adddd22",
+  "userId": "1",
+  "amount": "9.99"
+}
+
+<> 2024-07-10T155435.200.txt
+
+### pay8001按照主键删除一条记录
+DELETE http://localhost:8001/pay/del/2
+
+<> 2024-07-10T155547.200.json
+
+### pay8001按照主键修改一条记录
+PUT http://localhost:8001/pay/update
+Content-Type: application/json
+
+{
+  "id": "1",
+  "payNo": "payvme50",
+  "orderNo": "crazythursday",
+  "userId": "1111",
+  "amount": "114514"
+}
+
+### pay8001从consul获取测试配置
+GET http://localhost:8001/pay/get/info
+
+### pay8001测试获取网关信息 1
+GET http://localhost:8001/pay/gateway/get/1
+

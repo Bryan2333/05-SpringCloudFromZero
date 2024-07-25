@@ -1,0 +1,2 @@
+### gateway9527测试
+GET http://localhost:9527/pay/gateway/info

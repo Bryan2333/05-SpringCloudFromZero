@@ -1,0 +1,40 @@
+### FeignOrder6000新增支付流水
+POST http://localhost:8443/feign/pay/add
+Content-Type: application/json
+
+{
+  "payNo": "feignpay1111",
+  "orderNo": "feignorder1111",
+  "userId": "2",
+  "amount": "100"
+}
+
+### FeignOrder6000按主键查询支付流水
+GET http://localhost:8443/feign/pay/get/1
+
+### FeignOrder6000测试OpenFeign的负载均衡
+GET http://localhost:8443/feign/pay/get/info
+
+### FeignOrder6000测试服务熔断 正常
+GET http://localhost:8443/feign/pay/circuit/1
+
+### FeignOrder6000测试服务熔断 异常 COUNT_BASED
+GET http://localhost:8443/feign/pay/circuit/-1
+
+### FeignOrder6000测试服务熔断 异常 TIME_BASED
+GET http://localhost:8443/feign/pay/circuit/9999
+
+### FeignOrder6000测试服务隔离 正常
+GET http://localhost:8443/feign/pay/bulkheadsemaphore/1
+
+### FeignOrder6000测试服务限速器
+GET http://localhost:8443/feign/pay/ratelimit/1
+
+### FeignOrder6000测试Micrometer 链路追踪
+GET http://localhost:8443/feign/micrometer/2
+
+### FeignOrder6000测试Gateway 1
+GET http://localhost:8443/feign/pay/gateway/get/1
+
+### FeignOrder6000测试Gateway 2
+GET http://localhost:8443/feign/pay/gateway/info

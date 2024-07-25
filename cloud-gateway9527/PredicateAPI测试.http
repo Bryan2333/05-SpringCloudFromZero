@@ -1,0 +1,37 @@
+### gateway9527测试Cookie Predicate OK
+GET http://localhost:9527/pay/gateway/get/1
+Cookie: username=testuser
+
+### gateway9527测试Header Predicate OK
+GET http://localhost:9527/pay/gateway/get/1
+X-Request-ID: 123456
+
+### gateway9527测试Header Predicate ERROR
+GET http://localhost:9527/pay/gateway/get/1
+X-Request-ID: aaa
+
+### gateway9527测试Host Predicate OK
+GET http://localhost:9527/pay/gateway/get/1
+Host: www.bryan.com
+
+### gateway9527测试Host Predicate ERROR
+GET http://localhost:9527/pay/gateway/get/1
+Host: www.bryanaaaa.com
+
+### gateway9527测试Query Predicate OK
+GET http://localhost:9527/pay/gateway/get/1?userid=11
+
+### gateway9527测试Query Predicate ERROR
+GET http://localhost:9527/pay/gateway/get/1
+
+### gateway9527测试RmoteAddr Predicate OK
+GET http://192.168.0.104:9527/pay/gateway/get/1
+
+### gateway9527测试RmoteAddr Predicate ERROR
+GET http://localhost:9527/pay/gateway/get/1
+
+### gateway9527测试自定义Predicate OK
+GET http://localhost:9527/pay/gateway/info?userType=gold
+
+### gateway9527测试自定义Predicate ERROR
+GET http://localhost:9527/pay/gateway/info?userType=silver

@@ -1,0 +1,2 @@
+### 测试nacos-payment-provider
+GET http://localhost:9001/pay/nacos/2
